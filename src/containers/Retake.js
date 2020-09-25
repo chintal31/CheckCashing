@@ -12,8 +12,8 @@ export default function Customers() {
       <Toolbar />
       <Formik
         initialValues={{
-          bankName: "",
-          bankCode: "",
+          firstName: "",
+          lastName: "",
         }}
         validationSchema={validationSchema}
         onSubmit={(values, { setSubmitting }) => {
@@ -27,16 +27,16 @@ export default function Customers() {
           <Form>
             <Field
               component={TextField}
-              name="bankName"
+              name="firstName"
               type="text"
-              label="Bank Name"
+              label="First Name"
             />
             <br />
             <Field
               component={TextField}
-              type="number"
-              label="Bank Code"
-              name="bankCode"
+              type="text"
+              label="Last Name"
+              name="lastName"
             />
             {isSubmitting && <LinearProgress />}
             <br />
@@ -61,11 +61,8 @@ const validationSchema = Yup.object({
   //   .min(2, "Mininum 2 characters")
   //   .max(15, "Maximum 15 characters")
   //   .required("Required!"),
-  bankName: Yup.string().min(3, "Minimum 3 characters").required("Required!"),
-  bankCode: Yup.string().min(4, "Minimum 4 characters").required("Required!"),
-  // confirm_password: Yup.string()
-  //   .oneOf([Yup.ref("password")], "Password's not match")
-  //   .required("Required!"),
+  firstName: Yup.string().min(2, "Minimum 2 characters").required("Required!"),
+  lastName: Yup.string().min(2, "Minimum 2 characters").required("Required!"),
 });
 const useStyles = makeStyles((theme) => ({
   content: {

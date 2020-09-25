@@ -1,9 +1,9 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 
-import Forms from "../../components/Forms";
-import HeaderBar from "../../components/HeaderBar/headerbar";
-import Drawer from "../../components/Drawer/drawer";
+import Forms from "../components/Forms";
+import HeaderBar from "../components/headerbar";
+import Drawer from "../components/drawer";
 
 function Home() {
   const classes = useStyles();
