@@ -1,14 +1,15 @@
 import React from "react";
 import { connect } from "react-redux";
 
-import Customer from "../containers/Customers";
+import Customer from "../containers/Customer";
 import Search from "../containers/Search";
 import Addcheck from "../containers/Addcheck";
-import Addcustomer from "../containers/Addcustomer";
 import Retake from "../containers/Retake";
 import Badchecks from "../containers/Badchecks";
 import Advancedsearch from "../containers/Advancedsearch";
 import Addbank from "../containers/Addbank";
+import Manageusers from "../containers/Manageusers";
+import Reports from "../containers/Reports";
 
 function Forms(props) {
   const renderSelectedComponent = (selectedOption) => {
@@ -24,11 +25,15 @@ function Forms(props) {
       case 4:
         return <Advancedsearch />;
       case 5:
-        return <Addcustomer />;
+        return <Customer />;
       case 6:
         return <Addbank />;
       case 7:
         return <Retake />;
+      case 8:
+        return <Manageusers />;
+      case 9:
+        return <Reports />;
       default:
         return <Search />;
     }

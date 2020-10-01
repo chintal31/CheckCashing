@@ -5,15 +5,15 @@ import { Toolbar, Button, LinearProgress } from "@material-ui/core";
 import { TextField } from "formik-material-ui";
 import * as Yup from "yup";
 
-export default function Customers() {
+export default function Reports() {
   const classes = useStyles();
   return (
     <main className={classes.content}>
       <Toolbar />
       <Formik
         initialValues={{
-          email: "",
-          password: "",
+          bankName: "",
+          bankCode: "",
         }}
         validationSchema={validationSchema}
         onSubmit={(values, { setSubmitting }) => {
@@ -27,16 +27,16 @@ export default function Customers() {
           <Form>
             <Field
               component={TextField}
-              name="email"
-              type="email"
-              label="Email"
+              name="bankName"
+              type="text"
+              label="Bank Name"
             />
             <br />
             <Field
               component={TextField}
-              type="password"
-              label="Password"
-              name="password"
+              type="number"
+              label="Bank Code"
+              name="bankCode"
             />
             {isSubmitting && <LinearProgress />}
             <br />
@@ -61,8 +61,8 @@ const validationSchema = Yup.object({
   //   .min(2, "Mininum 2 characters")
   //   .max(15, "Maximum 15 characters")
   //   .required("Required!"),
-  email: Yup.string().email("Invalid email format").required("Required!"),
-  password: Yup.string().min(8, "Minimum 8 characters").required("Required!"),
+  bankName: Yup.string().min(3, "Minimum 3 characters").required("Required!"),
+  bankCode: Yup.string().min(4, "Minimum 4 characters").required("Required!"),
   // confirm_password: Yup.string()
   //   .oneOf([Yup.ref("password")], "Password's not match")
   //   .required("Required!"),

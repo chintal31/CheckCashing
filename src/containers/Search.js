@@ -1,8 +1,51 @@
 import React from "react";
 import { fade, makeStyles } from "@material-ui/core/styles";
 import { Toolbar } from "@material-ui/core";
-import InputBase from "@material-ui/core/InputBase";
+import TextField from "@material-ui/core/TextField";
 import SearchIcon from "@material-ui/icons/Search";
+import { connect } from "react-redux";
+import { search } from "./SideMenuReducer/actions";
+import IconButton from "@material-ui/core/IconButton";
+import InputAdornment from "@material-ui/core/InputAdornment";
+
+function Search({ search }) {
+  const classes = useStyles();
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    let value = document.getElementById("search").value;
+    search(value);
+  };
+  return (
+    <main className={classes.content}>
+      <Toolbar />
+      <form>
+        <div className={classes.search}>
+          <TextField
+            placeholder="Search…"
+            classes={{
+              root: classes.inputRoot,
+              input: classes.inputInput,
+            }}
+            id="search"
+            InputProps={{
+              endAdornment: (
+                <InputAdornment>
+                  <IconButton type="submit" onClick={handleSearch}>
+                    <div className={classes.searchIcon}>
+                      <SearchIcon />
+                    </div>
+                  </IconButton>
+                </InputAdornment>
+              ),
+              disableUnderline: true,
+            }}
+          />
+        </div>
+      </form>
+    </main>
+  );
+}
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -34,9 +77,10 @@ const useStyles = makeStyles((theme) => ({
   },
   inputRoot: {
     color: "inherit",
-    border: "1px solid lightgrey",
+    border: "1px solid darkgrey",
     borderRadius: "5px",
     width: "100%",
+    padding: "5px",
   },
   inputInput: {
     padding: theme.spacing(1, 1, 1, 0),
@@ -53,25 +97,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ClippedDrawer() {
-  const classes = useStyles();
+const mapStateToProps = (state /*, ownProps*/) => {
+  return {};
+};
 
-  return (
-    <main className={classes.content}>
-      <Toolbar />
-      <div className={classes.search}>
-        <div className={classes.searchIcon}>
-          <SearchIcon />
-        </div>
-        <InputBase
-          placeholder="Search…"
-          classes={{
-            root: classes.inputRoot,
-            input: classes.inputInput,
-          }}
-          inputProps={{ "aria-label": "search" }}
-        />
-      </div>
-    </main>
-  );
-}
+const mapDispatchToProps = (dispatch) => {
+  return {
+    search: (data) => {
+      search(dispatch, data);
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Search);
