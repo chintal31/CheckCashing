@@ -4,9 +4,9 @@ import ListItemText from "@material-ui/core/ListItemText";
 import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
 import { connect } from "react-redux";
-import { setSelectedItem } from "../containers/SideMenuReducer/actions";
+import { setSelectedItem } from "../containers/Mainreducer/actions";
 
-function Lists({ selectedItem, setSelectedItem }) {
+function Lists({ selectedItem, setSelectedItem, close }) {
   return (
     <>
       <List>
@@ -14,6 +14,7 @@ function Lists({ selectedItem, setSelectedItem }) {
           button
           onClick={() => {
             setSelectedItem(0);
+            close();
           }}
           value={0}
           selected={selectedItem === 0 ? true : false}
@@ -28,6 +29,7 @@ function Lists({ selectedItem, setSelectedItem }) {
           selected={selectedItem === 1 ? true : false}
           onClick={() => {
             setSelectedItem(1);
+            close();
           }}
         >
           <ListItemText primary="Update Customer" />
@@ -39,6 +41,7 @@ function Lists({ selectedItem, setSelectedItem }) {
           selected={selectedItem === 2 ? true : false}
           onClick={() => {
             setSelectedItem(2);
+            close();
           }}
         >
           <ListItemText primary="Add check" />
@@ -49,6 +52,7 @@ function Lists({ selectedItem, setSelectedItem }) {
         button
         onClick={() => {
           setSelectedItem(3);
+          close();
         }}
         value={3}
         selected={selectedItem === 3 ? true : false}
@@ -60,6 +64,7 @@ function Lists({ selectedItem, setSelectedItem }) {
         button
         onClick={() => {
           setSelectedItem(4);
+          close();
         }}
         value={4}
         selected={selectedItem === 4 ? true : false}
@@ -71,6 +76,7 @@ function Lists({ selectedItem, setSelectedItem }) {
         button
         onClick={() => {
           setSelectedItem(5);
+          close();
         }}
         value={5}
         selected={selectedItem === 5 ? true : false}
@@ -82,6 +88,7 @@ function Lists({ selectedItem, setSelectedItem }) {
         button
         onClick={() => {
           setSelectedItem(6);
+          close();
         }}
         value={6}
         selected={selectedItem === 6 ? true : false}
@@ -93,6 +100,7 @@ function Lists({ selectedItem, setSelectedItem }) {
         button
         onClick={() => {
           setSelectedItem(7);
+          close();
         }}
         value={7}
         selected={selectedItem === 7 ? true : false}
@@ -104,6 +112,7 @@ function Lists({ selectedItem, setSelectedItem }) {
         button
         onClick={() => {
           setSelectedItem(8);
+          close();
         }}
         value={8}
         selected={selectedItem === 8 ? true : false}
@@ -115,6 +124,7 @@ function Lists({ selectedItem, setSelectedItem }) {
         button
         onClick={() => {
           setSelectedItem(9);
+          close();
         }}
         value={9}
         selected={selectedItem === 9 ? true : false}
@@ -127,7 +137,7 @@ function Lists({ selectedItem, setSelectedItem }) {
 
 const mapStateToProps = (state) => {
   return {
-    selectedItem: state.sideMenuReducer.selectedItem,
+    selectedItem: state.mainReducer.selectedItem,
   };
 };
 

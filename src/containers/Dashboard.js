@@ -3,20 +3,18 @@ import { makeStyles } from "@material-ui/core/styles";
 
 import Forms from "../components/Forms";
 import HeaderBar from "../components/headerbar";
-import Drawer from "../components/drawer";
 
-function Home() {
+function Dashboard() {
   const classes = useStyles();
   return (
     <div className={classes.root}>
       <HeaderBar />
-      <Drawer />
       <Forms />
     </div>
   );
 }
 
-export default Home;
+export default Dashboard;
 
 const useStyles = makeStyles((theme) => ({
   root: {

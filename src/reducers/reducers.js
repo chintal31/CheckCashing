@@ -1,7 +1,11 @@
 import { combineReducers } from "redux";
+import { connectRouter } from "connected-react-router";
 
-import sideMenuReducer from "../containers/SideMenuReducer/sideMenuReducer";
+import mainReducer from "../containers/Mainreducer/mainReducer";
 
-export default combineReducers({
-  sideMenuReducer,
-});
+const createRootReducer = (history) =>
+  combineReducers({
+    router: connectRouter(history),
+    mainReducer,
+  });
+export default createRootReducer;

@@ -43,7 +43,7 @@ function Forms(props) {
 
 const mapStateToProps = (state /*, ownProps*/) => {
   return {
-    selectedItem: state.sideMenuReducer.selectedItem,
+    selectedItem: state.mainReducer.selectedItem,
   };
 };
 

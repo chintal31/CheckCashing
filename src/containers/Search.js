@@ -4,7 +4,7 @@ import { Toolbar } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 import SearchIcon from "@material-ui/icons/Search";
 import { connect } from "react-redux";
-import { search } from "./SideMenuReducer/actions";
+import { search } from "./Mainreducer/actions";
 import IconButton from "@material-ui/core/IconButton";
 import InputAdornment from "@material-ui/core/InputAdornment";
 

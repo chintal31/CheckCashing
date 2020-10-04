@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
 
 const mapStateToProps = (state /*, ownProps*/) => {
   return {
-    customerData: state.sideMenuReducer && state.sideMenuReducer.customerData,
+    customerData: state.mainReducer && state.mainReducer.customerData,
   };
 };
 
