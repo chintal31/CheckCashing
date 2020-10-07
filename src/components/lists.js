@@ -32,7 +32,7 @@ function Lists({ selectedItem, setSelectedItem, close }) {
             close();
           }}
         >
-          <ListItemText primary="Update Customer" />
+          <ListItemText primary="Customer" />
         </ListItem>
         <Divider />
         <ListItem
@@ -81,7 +81,7 @@ function Lists({ selectedItem, setSelectedItem, close }) {
         value={5}
         selected={selectedItem === 5 ? true : false}
       >
-        <ListItemText primary="Add customer" />
+        <ListItemText primary="Add bank" />
       </ListItem>
       <Divider />
       <ListItem
@@ -93,7 +93,7 @@ function Lists({ selectedItem, setSelectedItem, close }) {
         value={6}
         selected={selectedItem === 6 ? true : false}
       >
-        <ListItemText primary="Add bank" />
+        <ListItemText primary="Retake" />
       </ListItem>
       <Divider />
       <ListItem
@@ -105,7 +105,7 @@ function Lists({ selectedItem, setSelectedItem, close }) {
         value={7}
         selected={selectedItem === 7 ? true : false}
       >
-        <ListItemText primary="Retake" />
+        <ListItemText primary="Manage Users" />
       </ListItem>
       <Divider />
       <ListItem
@@ -116,18 +116,6 @@ function Lists({ selectedItem, setSelectedItem, close }) {
         }}
         value={8}
         selected={selectedItem === 8 ? true : false}
-      >
-        <ListItemText primary="Manage Users" />
-      </ListItem>
-      <Divider />
-      <ListItem
-        button
-        onClick={() => {
-          setSelectedItem(9);
-          close();
-        }}
-        value={9}
-        selected={selectedItem === 9 ? true : false}
       >
         <ListItemText primary="Reports" />
       </ListItem>

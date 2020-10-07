@@ -25,3 +25,11 @@ export const loginApi = async (values) => {
       return error.response;
     });
 };
+
+export const addBankApi = async (values) => {
+  return getAxiosInstance()
+    .post("/addBank", values)
+    .catch((error) => {
+      return error.response;
+    });
+};

@@ -1,4 +1,4 @@
-import { searchApi, signupApi, loginApi } from "./apis";
+import { searchApi, signupApi, loginApi, addBankApi } from "./apis";
 import {
   SET_SELECTED_ITEM,
   SET_SEARCH_RESULT,
@@ -7,6 +7,8 @@ import {
   SIGN_UP_FAILURE,
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
+  ADD_BANK_SUCCESS,
+  ADD_BANK_FAILURE,
   LOGOUT,
 } from "./constants";
 import { push } from "connected-react-router";
@@ -20,12 +22,13 @@ export function setSelectedItem(data) {
 
 export async function search(dispatch, data) {
   const response = await searchApi(data);
-  debugger;
   if (response && response.status === 200) {
-    dispatch({ type: SET_SEARCH_RESULT, data: response.data });
+    dispatch({
+      type: SET_SEARCH_RESULT,
+      data: response.data && response.data.length > 0 ? response.data[0] : {},
+    });
     dispatch(setSelectedItem(1));
   } else {
-    debugger;
     dispatch({
       type: SEARCH_API_FAILURE,
       data: response ? response.data.error : "",
@@ -63,4 +66,16 @@ export async function login(dispatch, data) {
 export async function logout(dispatch) {
   dispatch({ type: LOGOUT });
   dispatch(push("/login"));
+}
+
+export async function addBank(dispatch, data) {
+  const response = await addBankApi(data);
+  if (response && response.status === 200) {
+    dispatch({ type: ADD_BANK_SUCCESS, data: response.data });
+  } else {
+    dispatch({
+      type: ADD_BANK_FAILURE,
+      data: response ? response.data.error : "",
+    });
+  }
 }

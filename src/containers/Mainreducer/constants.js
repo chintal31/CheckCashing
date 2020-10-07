@@ -6,3 +6,5 @@ export const SIGN_UP_SUCCESS = "SIGN_UP_SUCCESS";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_FAILURE = "LOGIN_FAILURE";
 export const LOGOUT = "LOGOUT";
+export const ADD_BANK_SUCCESS = "ADD_BANK_SUCCESS";
+export const ADD_BANK_FAILURE = "ADD_BANK_FAILURE";

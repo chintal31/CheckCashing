@@ -25,14 +25,12 @@ function Forms(props) {
       case 4:
         return <Advancedsearch />;
       case 5:
-        return <Customer />;
-      case 6:
         return <Addbank />;
-      case 7:
+      case 6:
         return <Retake />;
-      case 8:
+      case 7:
         return <Manageusers />;
-      case 9:
+      case 8:
         return <Reports />;
       default:
         return <Search />;

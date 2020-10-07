@@ -1,19 +1,33 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Formik, Form, Field } from "formik";
-import { Toolbar, Button, LinearProgress } from "@material-ui/core";
-import { TextField } from "formik-material-ui";
+import { Formik, Form } from "formik";
+import { Toolbar, Button, LinearProgress, Grid } from "@material-ui/core";
+import Textfield from "../components/TextField";
+import { connect } from "react-redux";
 import * as Yup from "yup";
+import { addBank } from "./Mainreducer/actions";
+import ToastMsg from "../components/toastmsg";
 
-export default function Customers() {
+function AddBank({ addBankFailure, addBankSuccess }) {
   const classes = useStyles();
+  const [toastMessage, setToastMessage] = React.useState({});
+  const closeSnackBar = () => {
+    setToastMessage({});
+  };
   return (
     <main className={classes.content}>
       <Toolbar />
+      {addBankSuccess && addBankSuccess.message && (
+        <ToastMsg
+          toastMessage={addBankSuccess.message}
+          open={true}
+          close={closeSnackBar}
+        />
+      )}
       <Formik
         initialValues={{
-          bankName: "",
-          bankCode: "",
+          Bankname: "",
+          BankPhno: "",
         }}
         validationSchema={validationSchema}
         onSubmit={(values, { setSubmitting }) => {
@@ -22,24 +36,32 @@ export default function Customers() {
             alert(JSON.stringify(values, null, 2));
           }, 500);
         }}
+        //props.addBank(values);
       >
         {({ submitForm, isSubmitting }) => (
           <Form>
-            <Field
-              component={TextField}
-              name="bankName"
-              type="text"
-              label="Bank Name"
-            />
-            <br />
-            <Field
-              component={TextField}
-              type="number"
-              label="Bank Code"
-              name="bankCode"
-            />
+            <Grid container spacing={5}>
+              <Grid item xs={12} sm={4}>
+                <Textfield
+                  fullWidth
+                  name="Bankname"
+                  type="text"
+                  label="Bank Name"
+                />
+              </Grid>
+              <Grid item xs={12} sm={4}>
+                <Textfield
+                  fullWidth
+                  name="BankPhno"
+                  type="number"
+                  label="Bank Ph no"
+                />
+              </Grid>
+            </Grid>
+
             {isSubmitting && <LinearProgress />}
             <br />
+            <div className={classes.error}>{addBankFailure}</div>
             <Button
               variant="contained"
               color="primary"
@@ -47,7 +69,7 @@ export default function Customers() {
               onClick={submitForm}
               className={classes.submitBtn}
             >
-              Submit
+              Add
             </Button>
           </Form>
         )}
@@ -57,15 +79,8 @@ export default function Customers() {
 }
 
 const validationSchema = Yup.object({
-  // full_name: Yup.string()
-  //   .min(2, "Mininum 2 characters")
-  //   .max(15, "Maximum 15 characters")
-  //   .required("Required!"),
-  bankName: Yup.string().min(3, "Minimum 3 characters").required("Required!"),
-  bankCode: Yup.string().min(4, "Minimum 4 characters").required("Required!"),
-  // confirm_password: Yup.string()
-  //   .oneOf([Yup.ref("password")], "Password's not match")
-  //   .required("Required!"),
+  Bankname: Yup.string().min(3, "Minimum 3 characters").required("Required!"),
+  BankPhno: Yup.number().required("Required!"),
 });
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -75,4 +90,26 @@ const useStyles = makeStyles((theme) => ({
   submitBtn: {
     margin: "20px 0",
   },
+  error: {
+    padding: "10px",
+    textAlign: "center",
+    color: "red",
+  },
 }));
+
+const mapStateToProps = (state) => {
+  return {
+    addBankSuccess: state.mainReducer && state.mainReducer.addBankSuccess,
+    addBankFailure: state.mainReducer && state.mainReducer.addBankFailure,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addBank: (data) => {
+      dispatch(addBank(data));
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddBank);

@@ -7,10 +7,12 @@ import { connect } from "react-redux";
 import { search } from "./Mainreducer/actions";
 import IconButton from "@material-ui/core/IconButton";
 import InputAdornment from "@material-ui/core/InputAdornment";
+import Autocomplete from "@material-ui/lab/Autocomplete";
 
 function Search({ search }) {
   const classes = useStyles();
 
+  let users = [{ name: "Chintal" }, { name: "Hitesh" }];
   const handleSearch = (e) => {
     e.preventDefault();
     let value = document.getElementById("search").value;
@@ -21,25 +23,33 @@ function Search({ search }) {
       <Toolbar />
       <form>
         <div className={classes.search}>
-          <TextField
-            placeholder="Search…"
-            classes={{
-              root: classes.inputRoot,
-              input: classes.inputInput,
-            }}
-            id="search"
-            InputProps={{
-              endAdornment: (
-                <InputAdornment>
-                  <IconButton type="submit" onClick={handleSearch}>
-                    <div className={classes.searchIcon}>
-                      <SearchIcon />
-                    </div>
-                  </IconButton>
-                </InputAdornment>
-              ),
-              disableUnderline: true,
-            }}
+          <Autocomplete
+            id="free-solo-demo"
+            freeSolo
+            options={users.map((user) => user.name)}
+            renderInput={(params) => (
+              <TextField
+                placeholder="Search…"
+                classes={{
+                  root: classes.inputRoot,
+                  input: classes.inputInput,
+                }}
+                {...params}
+                id="search"
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment>
+                      <IconButton type="submit" onClick={handleSearch}>
+                        <div className={classes.searchIcon}>
+                          <SearchIcon />
+                        </div>
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                  disableUnderline: true,
+                }}
+              />
+            )}
           />
         </div>
       </form>

@@ -7,6 +7,8 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
   LOGOUT,
+  ADD_BANK_SUCCESS,
+  ADD_BANK_FAILURE,
 } from "./constants";
 
 export const initialState = {
@@ -16,6 +18,8 @@ export const initialState = {
   loggedInUser: {},
   signUpFailure: "",
   loginFailure: "",
+  addBankSuccess: {},
+  addBankFailure: "",
 };
 
 const mainReducer = (state = initialState, action) =>
@@ -58,6 +62,21 @@ const mainReducer = (state = initialState, action) =>
           ...state,
           loggedInUser: {},
           customerData: {},
+        };
+      case ADD_BANK_SUCCESS:
+        return {
+          ...state,
+          addBankSuccess: {
+            message: "Bank details added successfully.",
+            status: "success",
+          },
+          addBankFailure: "",
+        };
+      case ADD_BANK_FAILURE:
+        return {
+          ...state,
+          addBankSuccess: {},
+          addBankFailure: action.data,
         };
       default:
         return state;

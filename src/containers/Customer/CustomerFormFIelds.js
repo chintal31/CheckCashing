@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Formik, Form, Field } from "formik";
 import {
@@ -9,11 +9,12 @@ import {
   MenuItem,
   Grid,
 } from "@material-ui/core";
-import { TextField, Select, CheckboxWithLabel } from "formik-material-ui";
+import { Select, CheckboxWithLabel, Checkbox } from "formik-material-ui";
+import TextField from "../../components/TextField";
 import DateFnsUtils from "@date-io/date-fns";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import { KeyboardDatePicker } from "formik-material-ui-pickers";
-import Paper from "@material-ui/core/Paper";
+import ToastMsg from "../../components/toastmsg";
 import * as Yup from "yup";
 import axios from "axios";
 
@@ -49,64 +50,83 @@ const CustomerForm = (props) => {
     CustSincedate: props.customerData ? props.customerData.CustSincedate : "",
     CustlastMod: props.customerData ? props.customerData.CustlastMod : "",
     FileNo: props.customerData ? props.customerData.FileNo : "",
-    UpdateReqd: props.customerData ? props.customerData.UpdateReqd : "",
+    UpdateReqd: props.customerData ? props.customerData.UpdateReqd : false,
     hadbadcheck: props.customerData ? props.customerData.hadbadcheck : "",
     PictureData: props.customerData ? props.customerData.PictureData : "",
     FormData: props.customerData ? props.customerData.FormData : "",
     //Zip: props.customerData ? props.customerData.Zip : "",
   };
+  const [toastMessage, setToastMessage] = useState({});
+  const closeSnackBar = () => {
+    setToastMessage({});
+  };
   return (
-    <Formik
-      initialValues={initialValues}
-      validationSchema={validationSchema}
-      onSubmit={async (values, { setSubmitting }) => {
-        setTimeout(() => {
-          setSubmitting(false);
-        }, 500);
-        if (props.customerData.FileNo) {
-          //updateCustomer
-          await axios.post("http://localhost:5000/updateCustomer", values);
-        } else {
-          //addCustomer
-          await axios.post("http://localhost:5000/addCustomer", values);
-        }
-      }}
-    >
-      {({ submitForm, isSubmitting }) => (
-        <Paper className={classes.root} elevation={3}>
+    <>
+      <ToastMsg toastMessage={toastMessage} open={true} close={closeSnackBar} />
+      <Formik
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        onSubmit={async (values, { setSubmitting }) => {
+          setTimeout(() => {
+            setSubmitting(false);
+          }, 500);
+          if (props.customerData.FileNo) {
+            //updateCustomer
+            let res = await axios.post(
+              "http://localhost:5000/updateCustomer",
+              values
+            );
+            if (res.status === 200) {
+              setToastMessage({
+                message: "Your details have been updated successfully.",
+                status: "success",
+              });
+            }
+          } else {
+            //addCustomer
+            let res = await axios.post(
+              "http://localhost:5000/addCustomer",
+              values
+            );
+            if (res.status === 200) {
+              setToastMessage({
+                message: "Customer added successfully.",
+                status: "success",
+              });
+            }
+          }
+        }}
+      >
+        {({ values, submitForm, isSubmitting }) => (
           <Form>
             <Grid container spacing={5}>
               <Grid item xs={12} sm={4}>
-                <Field
+                <TextField
                   fullWidth
-                  component={TextField}
                   name="Firstname"
                   type="text"
                   label="First Name"
                 />
               </Grid>
               <Grid item xs={12} sm={4}>
-                <Field
+                <TextField
                   fullWidth
-                  component={TextField}
                   name="Middlename"
                   type="text"
                   label="Middle Name"
                 />
               </Grid>
               <Grid item xs={12} sm={4}>
-                <Field
+                <TextField
                   fullWidth
-                  component={TextField}
                   name="Lastname"
                   type="text"
                   label="Last Name"
                 />
               </Grid>
               <Grid item xs={12}>
-                <Field
+                <TextField
                   fullWidth
-                  component={TextField}
                   name="Coments"
                   type="text"
                   label="Comments"
@@ -163,9 +183,8 @@ const CustomerForm = (props) => {
                 </FormControl>
               </Grid>
               <Grid item xs={12}>
-                <Field
+                <TextField
                   fullWidth
-                  component={TextField}
                   name="Address"
                   type="text"
                   multiline
@@ -174,22 +193,10 @@ const CustomerForm = (props) => {
               </Grid>
 
               <Grid item xs={12} sm={4}>
-                <Field
-                  fullWidth
-                  component={TextField}
-                  name="SSN"
-                  type="text"
-                  label="SSN"
-                />
+                <TextField fullWidth name="SSN" type="text" label="SSN" />
               </Grid>
               <Grid item xs={12} sm={4}>
-                <Field
-                  fullWidth
-                  component={TextField}
-                  name="DRL"
-                  type="text"
-                  label="DRL"
-                />
+                <TextField fullWidth name="DRL" type="text" label="DRL" />
               </Grid>
               <Grid item xs={12} sm={4}>
                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -202,81 +209,67 @@ const CustomerForm = (props) => {
                 </MuiPickersUtilsProvider>
               </Grid>
               <Grid item xs={12} sm={4}>
-                <Field
+                <TextField
                   fullWidth
-                  component={TextField}
                   name="Company"
                   type="text"
                   label="Company"
                 />
               </Grid>
               <Grid item xs={12} sm={4}>
-                <Field
-                  fullWidth
-                  component={TextField}
-                  name="City"
-                  type="text"
-                  label="City"
-                />
+                <TextField fullWidth name="City" type="text" label="City" />
               </Grid>
               <Grid item xs={12} sm={4}>
-                <Field
+                <TextField
                   fullWidth
-                  component={TextField}
                   name="HomeNO"
                   type="number"
                   label="Home No"
                 />
               </Grid>
               <Grid item xs={12} sm={4}>
-                <Field
+                <TextField
                   fullWidth
-                  component={TextField}
                   name="ZipCode"
                   type="number"
                   label="ZipCode"
                 />
               </Grid>
               <Grid item xs={12} sm={4}>
-                <Field
+                <TextField
                   fullWidth
-                  component={TextField}
                   name="Cell1"
                   type="number"
                   label="Cell 1"
                 />
               </Grid>
               <Grid item xs={12} sm={4}>
-                <Field
+                <TextField
                   fullWidth
-                  component={TextField}
                   name="Cell2"
                   type="number"
                   label="Cell 2"
                 />
               </Grid>
               <Grid item xs={12} sm={4}>
-                <Field
+                <TextField
                   fullWidth
-                  component={TextField}
                   name="CompanyNo"
                   type="number"
                   label="Company No"
                 />
               </Grid>
               <Grid item xs={12} sm={4}>
-                <Field
+                <TextField
                   fullWidth
-                  component={TextField}
                   name="EmployeePHNo"
                   type="number"
                   label="Employee PhNo"
                 />
               </Grid>
               <Grid item xs={12} sm={4}>
-                <Field
+                <TextField
                   fullWidth
-                  component={TextField}
                   name="Employment"
                   type="text"
                   label="Employment"
@@ -311,36 +304,32 @@ const CustomerForm = (props) => {
               </Grid>
 
               <Grid item xs={12} sm={4}>
-                <Field
+                <TextField
                   fullWidth
-                  component={TextField}
                   name="Refname"
                   type="text"
                   label="Reference Name"
                 />
               </Grid>
               <Grid item xs={12} sm={4}>
-                <Field
+                <TextField
                   fullWidth
-                  component={TextField}
                   name="Relationship"
                   type="text"
                   label="Relationship"
                 />
               </Grid>
               <Grid item xs={12} sm={4}>
-                <Field
+                <TextField
                   fullWidth
-                  component={TextField}
                   name="refComment"
                   type="text"
                   label="Ref comments"
                 />
               </Grid>
               <Grid item xs={12} sm={4}>
-                <Field
+                <TextField
                   fullWidth
-                  component={TextField}
                   name="RefphNo"
                   type="text"
                   label="Ref Ph No"
@@ -368,9 +357,8 @@ const CustomerForm = (props) => {
               </Grid>
 
               <Grid item xs={12} sm={4}>
-                <Field
+                <TextField
                   fullWidth
-                  component={TextField}
                   name="FileNo"
                   type="text"
                   label="File No"
@@ -381,8 +369,8 @@ const CustomerForm = (props) => {
                   fullWidth
                   component={CheckboxWithLabel}
                   type="checkbox"
+                  id="UpdateReqd"
                   name="UpdateReqd"
-                  checked={false}
                   Label={{ label: "Update Reqd" }}
                 />
               </Grid>
@@ -390,9 +378,8 @@ const CustomerForm = (props) => {
                 <Field
                   fullWidth
                   component={CheckboxWithLabel}
-                  // type="checkbox"
                   name="hadbadcheck"
-                  checked={false}
+                  type="checkbox"
                   Label={{ label: "Has bad check" }}
                 />
               </Grid>
@@ -410,9 +397,9 @@ const CustomerForm = (props) => {
               {/* </Grid> */}
             </Grid>
           </Form>
-        </Paper>
-      )}
-    </Formik>
+        )}
+      </Formik>
+    </>
   );
 };
 
